@@ -31,7 +31,7 @@ export default function App() {
     try {
       setLoading(true);
       setError(null);
-      const result = await axios.post('http://localhost:5000/compile', {
+      const result = await axios.post('https://code-classroom.vercel.app/compile', {
         language: selectedLanguage,
         code: codeInput,
         input: inputValue,

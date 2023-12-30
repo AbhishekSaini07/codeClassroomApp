@@ -1,38 +1,64 @@
-.App {
-  text-align: center;
+.IOs{
+  background-color: rgba(216, 216, 216, 0.3);
+  width: 40vw;
+  margin: 20px;
+  border-radius: 20px;
+  padding: 10px 20px;
+  box-shadow: 5px 5px 5px lightblue;
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+
+.cBody{
+  background-color: rgba(248, 247, 247, 0.932);
+  padding: 5px 30px 10px 30px;
+  
+ 
+}
+.RunButton{
+  background-color: rgba(216, 216, 216, 0.3);
+  border: 1px solid black;
+  padding: 0px 15px;
+  border-radius: 5px;
+  font-weight:500;
+  box-shadow: 5px 5px 5px lightblue;
+}
+.langbutton{
+ 
+  align-content: center;
+  border-radius: 5px;
+  background-color: rgba(216, 216, 216, 0.3);
+
+  padding: 5px 10px;
+  border: 1px solid black;
+  font-weight:500;
+  box-shadow: 5px 5px 5px lightblue;
+}
+.cb{
+  border-radius: 20px;
+  padding: 30px;
+  margin: 0px 14px;
+
+  background-color: rgba(255, 255, 255, 0.925);
+  border: 1px solid black;
+  box-shadow: 5px 5px 5px lightblue;
+ 
+}
+.full-width {
+  width: 100%;
+  height: 11vh;
+  max-height: 30vh;
+  padding: 2px;
+  border: none;
+  background-color: rgba(216, 216, 216, 0);
+
+  
+}
+#outputbloc{
+  height: 11vh;
+  max-height: 30vh;
+  overflow-y: scroll;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

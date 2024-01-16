@@ -8,6 +8,14 @@
     box-shadow: 5px 5px 5px lightblue;
   
   }
+  .Qn{
+    background-color: rgba(235, 238, 238, 0.743);
+    height: 609px;
+    width: 100%;
+    padding: 20px;
+    margin-top: 40px;
+    overflow-x: scroll;
+  }
   .lBox{
     height: 94vh;
     overflow-y: scroll;
@@ -92,4 +100,6 @@
   }
   
   
-  
+.i{
+  margin-left: -40px;
+}

@@ -30,10 +30,15 @@ const SignupForm = () => {
       setError('');
 
       const response = await axios.post('http://localhost:5000/signup', {
+        withCredentials: true,
         name,
         email,
         password,
-      });
+      },{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        }});
 
       if (response.data.success) {
         console.log('Signup successful');

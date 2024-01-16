@@ -1,25 +1,128 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Button, Card, Col, Container, Image, ListGroup, ListGroupItem, Nav, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Image, ListGroup, ListGroupItem, Nav, Row } from 'react-bootstrap';
 import { PersonFill } from 'react-bootstrap-icons';
 import Navbar from 'react-bootstrap/Navbar';
+import { FaFilter, FaSearch } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import logoImage from '../assets/codeClassroom.png';
 import CompilerImage from '../assets/onlinecompiler.png';
-
+import style from '../style_files/Compiler.module.css';
+import AuthModal from './authModal';
 export default function HomePage(){
     const [questions, setQuestions] = useState([]);
+    const [searchParams, setSearchParams] = useState({
+      difficulty: '',
+      title: '',
+      tags: '',
+    });
+    const [allTags, setAllTags] = useState([
+      'Stack', 'Queue', 'Hashmap', 'Design', 'BFS (Breadth-First Search)',
+      'Dynamic Programming', 'Union Find', 'Backtracking', 'Tree', 'Loops',
+      'Patterns', 'String', 'DFS (Depth-First Search)', 'Array', 'Recursion',
+      'Hard', 'Basic'
+    ]);
     const navigate = useNavigate();
     const NavigateToCompiler = () => {
      
         navigate("/compiler");
     }
+    const [shouldShowErrorModal, setShouldShowErrorModal] = useState(false);
+
+
     useEffect(() => {
-        // Fetch questions from the server
-        axios.get('http://localhost:5000/questions')
-          .then(response => setQuestions(response.data))
-          .catch(error => console.error('Error fetching questions:', error));
-      }, []);
+      handleSearch();
+    }, []);
+    // const handleInputChange = (e) => {
+    //   const { name, value } = e.target;
+    //   setSearchParams((prevParams) => ({
+    //     ...prevParams,
+    //     [name]: value,
+    //   }));
+    //   alert(searchParams.difficulty + searchParams.tags + searchParams.title);
+    // };
+  
+    // const handleSelectTag = (tag) => {
+    //   console.log(searchParams.tags);
+    //   setSearchParams((prevParams) => ({
+    //     ...prevParams,
+    //     tags: tag,
+    //   }));
+    //   alert(searchParams.tags);
+    // };
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setSearchParams((prevParams) => ({
+        ...prevParams,
+        [name]: value,
+      }));
+     
+      
+    };
+
+const handleSelectTag = (tag) => {
+  setSearchParams((prevParams) => ({
+    ...prevParams,
+    tags: tag,
+  }));
+ 
+};
+
+    const handleSearch = () => {
+      axios.get('http://localhost:5000/questions', { withCredentials: true, params:searchParams })
+      .then(response => setQuestions(response.data))
+      .catch(error => {
+        console.error('Error fetching questions:', error);
+  
+        if (error.response && error.response.data.message === 'Unauthorized') {
+          // Redirect to the login page or handle unauthorized access
+          // For example, you can use react-router or window.location.href
+          // to navigate to the login page
+          setShouldShowErrorModal(true);
+          
+        }
+      });
+    };
+    
+    const TagListComponent = ({ tags, selectedTag, onSelectTag }) => {
+      return (
+        <Nav defaultActiveKey="All" className="flex-column" style={{ backgroundColor: 'rgba(216, 216, 216, 0.3)', padding: '15px' }}>
+          <Nav.Item>
+            <Nav.Link
+              eventKey="All"
+              onClick={() => onSelectTag("")}
+              style={{
+                borderBottom: '1px solid #ccc',
+                padding: '10px',
+                color: selectedTag === "All" ? 'blue' : 'inherit',
+                textDecoration: 'none',
+                backgroundColor: selectedTag === "All" ? 'lightblue' : 'inherit', // Highlight effect
+              }}
+            >
+              All
+            </Nav.Link>
+          </Nav.Item>
+          {tags.map(tag => (
+            <Nav.Item key={tag}>
+              <Nav.Link
+                eventKey={tag}
+                onClick={() => onSelectTag(tag)}
+                style={{
+                  borderBottom: '1px solid #ccc',
+                  padding: '10px',
+                  color: selectedTag === tag ? 'blue' : 'inherit',
+                  textDecoration: 'none',
+                  backgroundColor: selectedTag === tag ? 'lightblue' : 'inherit', // Highlight effect
+                }}
+              >
+                {tag}
+              </Nav.Link>
+            </Nav.Item>
+          ))}
+        </Nav>
+      );
+    };
+    
 
       const Content = () => {
         return (
@@ -44,9 +147,15 @@ export default function HomePage(){
           </Container>
         );
       };
-      const handleSignIn = () => {
-        navigate("/");
-      };
+      
+      const handleLogout = () => {
+        axios.get('http://localhost:5000/logout', { withCredentials: true})
+        .then(response =>  window.location.href = '/')
+        .catch(error => {
+          console.error('Error While Logout', error);
+        });
+
+      }
 
       const QuestionList = () => {
         const [selectedQuestion, setSelectedQuestion] = useState(null);
@@ -113,9 +222,9 @@ export default function HomePage(){
             <Nav>
               
               
-            <Button style={{width:"120px", marginRight:"-80px"}} variant="primary" onClick={handleSignIn} className="d-flex align-items-center">
+            <Button style={{width:"120px", marginRight:"-80px"}} variant="secondary" onClick={handleLogout} className="d-flex align-items-center">
       <PersonFill size={20} className="mr-2" /> {/* Sign-in icon */}
-     &nbsp;   Sign In
+     &nbsp;  Log Out
     </Button>
             </Nav>
           </Navbar.Collapse>
@@ -136,18 +245,69 @@ export default function HomePage(){
       
 
       </Row>
+      
+        
+     
       <Row>
+     
       <Col sm={12} className='hrc2'>
+    
         <h2>DSA Questions for Every Level</h2>
         <br/>
-
-        <QuestionList/>
-    
-      
+        <Row>
+          <Col md={9}>
+             <Row>
+               <Col> 
+                <Row>
+                    <Form>
+                    <Col md={12}> 
+                    <Form.Group controlId="difficulty" >
+                    <Form.Label ><FaFilter /> Difficulty:</Form.Label>
+                    <Form.Control as="select" name="difficulty" 
+                    value={searchParams.difficulty} onChange={handleInputChange}
+                   >
+                    <option value="">Select Difficulty</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                    </Form.Control>
+                    </Form.Group>
+                    </Col>
+                    <Col md={12}> 
+                    <Form.Group controlId="title" >
+                    <Form.Label ><FaSearch /> Title:</Form.Label>
+                    <Form.Control type="text" name="title" value={searchParams.title} 
+                    onChange={handleInputChange} placeholder="Enter title" style={{ width: "100%" }} />
+                    </Form.Group>
+                    </Col>
+                    </Form>
+                </Row>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}> 
+              <br/><button style={{width:"100%", height:"80%"}} className={style.RunButton} onClick={handleSearch}>
+              Search Question
+              </button>
+              </Col>
+            </Row>
+            <Row>
+              
+              <Col>
+                <div className={style.Qn}><QuestionList/></div>
+               
+              </Col>
+            </Row>
+          </Col>
+         <Col md={3}>{
+          <TagListComponent tags={allTags} selectedTag={searchParams.tags} onSelectTag={handleSelectTag} />}
+          </Col>
+        
+        </Row>
       </Col>
-
-      </Row>
-      <Row>
+    </Row>
+       <Row>
+      
       <Col sm={12} >
         <Content/>
       </Col>
@@ -162,7 +322,8 @@ export default function HomePage(){
           </Row>
         </Container>
       </footer>
-      
+      {shouldShowErrorModal && <AuthModal showErrorModal={shouldShowErrorModal} />}
+
        
          
           

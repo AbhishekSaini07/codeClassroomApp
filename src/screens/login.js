@@ -22,9 +22,13 @@ const LoginForm = () => {
       setError('');
 
       const response = await axios.post('http://localhost:5000/login', {
-        email,
+        email,                     
         password,
-      });
+      },{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        }});
       console.log(response);
       
 
@@ -52,7 +56,7 @@ const LoginForm = () => {
     <div className="content">
     <Image src={logoImage} alt="Logo" height="64px" />
     <div className="text">Login Form</div>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>  
       <div className="field">
         <input
           type="text"

@@ -11,8 +11,10 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
+import { useNavigate } from 'react-router-dom';
 import logoImage from '../assets/codeClassroom.png';
 import style from '../style_files/Compiler.module.css';
+import AuthModal from './authModal';
 
 export default function Compiler() {
   const [codeInput, setCodeInput] = useState("console.log('hello world!');");
@@ -22,7 +24,8 @@ export default function Compiler() {
   const stringWithBreaks = output.replace(/\n/g, '<br/>');
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
   const [inputValue, setInputValue] = useState(" ");
-
+  const [shouldShowErrorModal, setShouldShowErrorModal] = useState(false);
+  const navigator = useNavigate();
   const handleCodeChange = (value) => {
     setCodeInput(value);
   };
@@ -33,15 +36,21 @@ export default function Compiler() {
       setError(null);
 
       const result = await axios.post('http://localhost:5000/compile', {
-
         language: selectedLanguage,
         code: codeInput,
         input: inputValue,
-      });
+      }, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        }});
       setOutput(result.data.output);
     } catch (error) {
       console.error('Error calling server:', error);
       if (error.response) {
+        if(error.response.data.message=='Unauthorized'){
+          setShouldShowErrorModal(true);
+        }
         // The request was made, but the server responded with a status code
         // that falls out of the range of 2xx
         setError(`Server error: ${error.response.status} - ${error.response.data.message}`);
@@ -61,7 +70,7 @@ export default function Compiler() {
     <div className='full'>
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container className={style.header}>
-          <Image src={logoImage} alt="Logo" height="48px" />
+          <Image className={style.i} src={logoImage} alt="Logo" height="48px" />
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto"></Nav>
@@ -122,8 +131,10 @@ export default function Compiler() {
             )}
           </Col>
         </Row>
+        {shouldShowErrorModal && <AuthModal showErrorModal={shouldShowErrorModal} />}
       </div>
     </div>
+
   );
 }
 

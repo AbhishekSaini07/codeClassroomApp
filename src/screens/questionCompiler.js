@@ -34,7 +34,6 @@ export default function QuestionCompiler() {
     isRunning: false,
   });
   
-  
 
   const toggleInputMode = () => {
     setIsCustomInputMode((prevMode) => !prevMode);
@@ -46,14 +45,41 @@ export default function QuestionCompiler() {
 
   const inputLabel = isCustomInputMode ? 'Custom Input:' : 'Sample Test Case Input:';
 
+  // useEffect(() => {
+  //   // Fetch a specific question by ID from the server
+  //   // Replace this with your actual fetch logic
+  //   fetch(`http://localhost:5000/questions/${id}`, {
+  //     credentials: 'include',
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => setQuestion(data))
+  //     .catch(error => {
+  //       console.error('Error fetching questions:', error);
+  
+  //       if (error.response && error.response.data.message === 'Unauthorized') {
+  //         // Redirect to the login page or handle unauthorized access
+  //         // For example, you can use react-router or window.location.href
+  //         // to navigate to the login page
+  //         navigate('/');
+  //       }
+  //     })}, [id]);
   useEffect(() => {
-    // Fetch a specific question by ID from the server
-    // Replace this with your actual fetch logic
-    fetch(`http://localhost:5000/questions/${id}`)
-      .then((response) => response.json())
-      .then((data) => setQuestion(data))
-      .catch((error) => console.error(`Error fetching question ${id}:`, error));
-  }, [id]);
+  // Fetch a specific question by ID from the server
+  // Replace this with your actual fetch logic
+  axios.get(`http://localhost:5000/questions/${id}`, { withCredentials: true })
+    .then(response => setQuestion(response.data))
+    .catch(error => {
+      console.error('Error fetching question:', error);
+
+      if (error.response && error.response.data.message === 'Unauthorized') {
+        // Redirect to the login page or handle unauthorized access
+        // For example, you can use react-router or window.location.href
+        // to navigate to the login page
+        window.location.href = '/';
+      }
+    });
+}, [id]);
+
 
   if (!question) {
     return <div>Loading...</div>;
@@ -83,7 +109,11 @@ export default function QuestionCompiler() {
           language: selectedLanguage,
           code: codeInput,
           input: hiddenTestCase.input,
-        });
+        },{
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          }});
 
         const isHiddenOutputMatched =
           hiddenResult.data.output.toString().trim() === hiddenTestCase.output.toString().trim();
@@ -127,7 +157,11 @@ export default function QuestionCompiler() {
         language: selectedLanguage,
         code: codeInput,
         input: isCustomInputMode ? inputValue : getSampleInput(),
-      });
+      },{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        }});
       setOutput(result.data.output) ;
       const o = getSampleOutput();
      
@@ -226,8 +260,8 @@ export default function QuestionCompiler() {
       <h4>Sample Test Cases:</h4>
 {question.sample_testcases && question.sample_testcases.map((sample, index) => (
   <div key={index}>
-    <strong>Input:</strong> {sample.input ? JSON.stringify(sample.input) : 'No input available'} <br />
-    <strong>Output:</strong> {sample.output ? JSON.stringify(sample.output) : 'No output available'} <br />
+    <strong>Input:</strong> {sample.input ? (sample.input) : 'No input available'} <br />
+    <strong>Output:</strong> {sample.output ? (sample.output) : 'No output available'} <br />
     <strong>Explanation:</strong> {sample.explanation ? sample.explanation : 'No explanation available'}
     <hr />
   </div>

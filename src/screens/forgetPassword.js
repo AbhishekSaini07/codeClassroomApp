@@ -22,7 +22,11 @@ const ForgetPasswordForm = () => {
 
       const response = await axios.post('http://localhost:5000/forget-password', {
         email,
-      });
+      },{
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        }});
 
       if (response.data.success) {
         setSuccessMessage(response.data.message);

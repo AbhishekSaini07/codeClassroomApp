@@ -69,7 +69,7 @@ const handleSelectTag = (tag) => {
 };
 
     const handleSearch = () => {
-      
+      console.log(localStorage.getItem('Token'));
       axios.get('https://codeclassroom.onrender.com/questions',{
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token
@@ -154,6 +154,7 @@ const handleSelectTag = (tag) => {
       };
       
       const handleLogout = () => {
+        
         axios.get('https://codeclassroom.onrender.com/logout', {
           headers: {
               'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token

@@ -154,15 +154,19 @@ const handleSelectTag = (tag) => {
       };
       
       const handleLogout = () => {
-        
-        axios.get('https://codeclassroom.onrender.com/logout', {
-          headers: {
-              'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token
-          }})
-        .then(response =>  window.location.href = '/')
-        .catch(error => {
-          console.error('Error While Logout', error);
-        });
+        // no need of these because now app auth using jwt
+        // axios.get('https://codeclassroom.onrender.com/logout', {
+        //   headers: {
+        //       'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token
+        //   }})
+        // .then(response =>  window.location.href = '/')
+        // .catch(error => {
+        //   console.error('Error While Logout', error);
+        // });
+
+        //just delete token
+        localStorage.removeItem('Token');
+        window.location.href = '/';
 
       }
 

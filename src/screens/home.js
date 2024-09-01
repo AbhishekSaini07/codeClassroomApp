@@ -72,7 +72,7 @@ const handleSelectTag = (tag) => {
       
       axios.get('https://codeclassroom.onrender.com/questions',{
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the JWT token
+            'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token
         },
     })
       .then(response => setQuestions(response.data))
@@ -156,7 +156,7 @@ const handleSelectTag = (tag) => {
       const handleLogout = () => {
         axios.get('https://codeclassroom.onrender.com/logout', {
           headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the JWT token
+              'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token
           }})
         .then(response =>  window.location.href = '/')
         .catch(error => {

@@ -44,10 +44,9 @@ const ResetPasswordForm = ({ history }) => {
         console.log(response.data);
 
       if (response.data.success) {
-        console.log("ssdkd");
-        alert("Done")
+        alert("Password Reset Successfully");
         setSuccessMessage('Password reset successfully');
-        navigate("/home");
+        navigate("/");
 
       } else {
         setError(response.data.error || 'Password reset failed');

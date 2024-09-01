@@ -28,11 +28,13 @@ const LoginForm = () => {
         headers: {
           'Content-Type': 'application/json',
         }});
-      console.log(response.data);
+      //console.log(response.data);
       
 
       if (response.data.success) {
-        console.log(response.data.token);
+        //console.log(response.data.token);
+        const token = response.data.token;
+        localStorage.setItem('Token', JSON.stringify(token));
         console.log('Login successful');
         // You can redirect or perform additional actions upon successful login
         navigate("/home");

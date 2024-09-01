@@ -36,12 +36,14 @@ export default function Compiler() {
       setError(null);
 
       const result = await axios.post('https://codeclassroom.onrender.com/newCompile', {
+        
         language: selectedLanguage,
         code: codeInput,
         input: inputValue,
       }, {
         withCredentials: true,
         headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the JWT token  
           'Content-Type': 'application/json',
         }});
       //alert(result.data);

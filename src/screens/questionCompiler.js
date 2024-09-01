@@ -154,8 +154,9 @@ export default function QuestionCompiler() {
         {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
-          },
+            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the JWT token  
+            'Content-Type': 'application/json',
+          }
         }
       );
       setOutput(result.data);
@@ -208,8 +209,9 @@ export default function QuestionCompiler() {
           {
             withCredentials: true,
             headers: {
-              "Content-Type": "application/json",
-            },
+              'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the JWT token  
+              'Content-Type': 'application/json',
+            }
           }
         );
 

@@ -41,6 +41,8 @@ const SignupForm = () => {
         }});
 
       if (response.data.success) {
+        const token = response.data.token;
+        localStorage.setItem('Token', JSON.stringify(token));
         console.log('Signup successful');
         // You can redirect or perform additional actions upon successful signup
         navigator("/home");

@@ -32,7 +32,7 @@ const ResetPasswordForm = ({ history }) => {
       setError('');
       setSuccessMessage('');
 
-      const response = await axios.post('https://codeclassroom.onrender.com/reset-password', {
+      const response = await axios.post('https://codeclassroom.onrender.com/resetPassword', {
         withCredentials: true,
         token: resetCode,
         newPassword,

@@ -41,6 +41,7 @@ const ResetPasswordForm = ({ history }) => {
         headers: {
           'Content-Type': 'application/json',
         }});
+        alert(response.data);
 
       if (response.data.success) {
         alert("done");

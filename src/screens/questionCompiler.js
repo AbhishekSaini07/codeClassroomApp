@@ -48,7 +48,7 @@ export default function QuestionCompiler() {
   // useEffect(() => {
   //   // Fetch a specific question by ID from the server
   //   // Replace this with your actual fetch logic
-  //   fetch(`http://localhost:5000/questions/${id}`, {
+  //   fetch(`https://codeclassroom.onrender.com/questions/${id}`, {
   //     credentials: 'include',
   //   })
   //     .then((response) => response.json())
@@ -67,7 +67,7 @@ export default function QuestionCompiler() {
     // Fetch a specific question by ID from the server
     // Replace this with your actual fetch logic
     axios
-      .get(`http://localhost:5000/questions/${id}`, { withCredentials: true })
+      .get(`https://codeclassroom.onrender.com/questions/${id}`, { withCredentials: true })
       .then((response) => setQuestion(response.data))
       .catch((error) => {
         console.error("Error fetching question:", error);
@@ -94,7 +94,7 @@ export default function QuestionCompiler() {
       setError(null);
 
       const result = await axios.post(
-        "http://localhost:5000/newCompile",
+        "https://codeclassroom.onrender.com/newCompile",
         {
           language: selectedLanguage,
           code: codeInput,
@@ -145,7 +145,7 @@ export default function QuestionCompiler() {
       setError(null);
 
       const result = await axios.post(
-        "http://localhost:5000/newCompile",
+        "https://codeclassroom.onrender.com/newCompile",
         {
           language: selectedLanguage,
           code: codeInput,
@@ -199,7 +199,7 @@ export default function QuestionCompiler() {
 
       for (const [index, hiddenTestCase] of hiddenTestCases.entries()) {
         const hiddenResult = await axios.post(
-          "http://localhost:5000/newCompile",
+          "https://codeclassroom.onrender.com/newCompile",
           {
             language: selectedLanguage,
             code: codeInput,

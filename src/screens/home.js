@@ -69,7 +69,7 @@ const handleSelectTag = (tag) => {
 };
 
     const handleSearch = () => {
-      axios.get('http://localhost:5000/questions', { withCredentials: true, params:searchParams })
+      axios.get('https://codeclassroom.onrender.com/questions', { withCredentials: true, params:searchParams })
       .then(response => setQuestions(response.data))
       .catch(error => {
         console.error('Error fetching questions:', error);
@@ -149,7 +149,7 @@ const handleSelectTag = (tag) => {
       };
       
       const handleLogout = () => {
-        axios.get('http://localhost:5000/logout', { withCredentials: true})
+        axios.get('https://codeclassroom.onrender.com/logout', { withCredentials: true})
         .then(response =>  window.location.href = '/')
         .catch(error => {
           console.error('Error While Logout', error);

@@ -35,7 +35,7 @@ export default function Compiler() {
       setLoading(true);
       setError(null);
 
-      const result = await axios.post('http://localhost:5000/newCompile', {
+      const result = await axios.post('https://codeclassroom.onrender.com/newCompile', {
         language: selectedLanguage,
         code: codeInput,
         input: inputValue,

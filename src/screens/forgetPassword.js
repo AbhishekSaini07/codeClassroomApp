@@ -20,7 +20,7 @@ const ForgetPasswordForm = () => {
       setError('');
       setSuccessMessage('');
 
-      const response = await axios.post('http://localhost:5000/forget-password', {
+      const response = await axios.post('https://codeclassroom.onrender.com/forget-password', {
         email,
       },{
         withCredentials: true,

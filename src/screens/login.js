@@ -2,10 +2,9 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Image } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import logoImage from '../assets/codeClassroom.png';
-import  '../style_files/authFormStyle.css';
+import '../style_files/authFormStyle.css';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,11 +28,11 @@ const LoginForm = () => {
         headers: {
           'Content-Type': 'application/json',
         }});
-      console.log(response);
+      console.log(response.data);
       
 
       if (response.data.success) {
-       
+        console.log(response.data.token);
         console.log('Login successful');
         // You can redirect or perform additional actions upon successful login
         navigate("/home");

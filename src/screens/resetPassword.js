@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import logoImage from '../assets/codeClassroom.png';
 import '../style_files/authFormStyle.css';
 const ResetPasswordForm = ({ history }) => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const [resetCode, setResetCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -47,7 +47,7 @@ const ResetPasswordForm = ({ history }) => {
         console.log("ssdkd");
         alert("Done")
         setSuccessMessage('Password reset successfully');
-        navigator("/");
+        navigate("/home");
 
       } else {
         setError(response.data.error || 'Password reset failed');

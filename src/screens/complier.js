@@ -23,7 +23,7 @@ export default function Compiler() {
   const [error, setError] = useState(null);
   const stringWithBreaks = output.replace(/\n/g, '<br/>');
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
-  const [inputValue, setInputValue] = useState(" ");
+  const [inputValue, setInputValue] = useState("");
   const [shouldShowErrorModal, setShouldShowErrorModal] = useState(false);
   const navigator = useNavigate();
   const handleCodeChange = (value) => {
@@ -35,7 +35,7 @@ export default function Compiler() {
       setLoading(true);
       setError(null);
 
-      const result = await axios.post('http://localhost:5000/compile', {
+      const result = await axios.post('http://localhost:5000/newCompile', {
         language: selectedLanguage,
         code: codeInput,
         input: inputValue,
@@ -44,7 +44,8 @@ export default function Compiler() {
         headers: {
           'Content-Type': 'application/json',
         }});
-      setOutput(result.data.output);
+      //alert(result.data);
+      setOutput(result.data);
     } catch (error) {
       console.error('Error calling server:', error);
       if (error.response) {
@@ -83,10 +84,10 @@ export default function Compiler() {
                   onChange={(e) => setSelectedLanguage(e.target.value)}
                 >
                   <option value="javascript">JavaScript</option>
-                  <option value="python3">python3</option>
+                  <option value="python">python3</option>
                   <option value="java">java</option>
                   <option value="c">c</option>
-                  <option value="cpp17">cpp17</option>
+                  <option value="cpp">cpp17</option>
                   <option value="dart">dart</option>
                 </select>
               </div>

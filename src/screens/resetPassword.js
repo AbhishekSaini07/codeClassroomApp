@@ -20,7 +20,7 @@ const ResetPasswordForm = ({ history }) => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {

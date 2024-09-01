@@ -21,7 +21,7 @@ const ResetPasswordForm = ({ history }) => {
   };
 
   const handleResetPassword = async () => {
-   
+    e.preventDefault();
 
     if (newPassword !== confirmPassword) {
         setError('Passwords do not match');

@@ -1,11 +1,11 @@
 // ResetPasswordForm.js
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';
-import { Image } from 'react-bootstrap';
 import React, { useState } from 'react';
+import { Image } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import logoImage from '../assets/codeClassroom.png';
 import '../style_files/authFormStyle.css';
-import { Link, useNavigate } from 'react-router-dom';
 const ResetPasswordForm = ({ history }) => {
   const navigator = useNavigate();
   const [resetCode, setResetCode] = useState('');
@@ -41,15 +41,14 @@ const ResetPasswordForm = ({ history }) => {
         headers: {
           'Content-Type': 'application/json',
         }});
-        alert(response.data);
+        console.log(response.data);
 
       if (response.data.success) {
-        alert("done");
-        // setSuccessMessage('Password reset successfully');
+        console.log("ssdkd");
+        alert("Done")
+        setSuccessMessage('Password reset successfully');
         navigator("/");
-        // Redirect to a login page or another relevant page after successful reset
-        // You can customize the redirection based on your application's flow
-        
+
       } else {
         setError(response.data.error || 'Password reset failed');
       }

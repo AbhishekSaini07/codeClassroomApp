@@ -71,6 +71,8 @@ const handleSelectTag = (tag) => {
     const handleSearch = () => {
       console.log(localStorage.getItem('Token'));
       axios.get('https://codeclassroom.onrender.com/questions',{
+        withCredentials: true,
+        params:searchParams,
         headers: {
             'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token
         },

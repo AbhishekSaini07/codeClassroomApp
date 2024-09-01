@@ -67,7 +67,9 @@ export default function QuestionCompiler() {
     // Fetch a specific question by ID from the server
     // Replace this with your actual fetch logic
     axios
-      .get(`https://codeclassroom.onrender.com/questions/${id}`, { withCredentials: true })
+      .get(`https://codeclassroom.onrender.com/questions/${id}`, {headers: {
+        'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token  
+      }})
       .then((response) => setQuestion(response.data))
       .catch((error) => {
         console.error("Error fetching question:", error);
@@ -103,8 +105,9 @@ export default function QuestionCompiler() {
         {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
-          },
+            'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token  
+            'Content-Type': 'application/json',
+          }
         }
       );
       setOutput(result.data);
@@ -154,7 +157,7 @@ export default function QuestionCompiler() {
         {
           withCredentials: true,
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the JWT token  
+            'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token  
             'Content-Type': 'application/json',
           }
         }
@@ -209,7 +212,7 @@ export default function QuestionCompiler() {
           {
             withCredentials: true,
             headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the JWT token  
+              'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token  
               'Content-Type': 'application/json',
             }
           }

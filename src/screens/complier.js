@@ -43,7 +43,7 @@ export default function Compiler() {
       }, {
         withCredentials: true,
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`, // Include the JWT token  
+          'Authorization': `Bearer ${localStorage.getItem('Token')}`, // Include the JWT token  
           'Content-Type': 'application/json',
         }});
       //alert(result.data);

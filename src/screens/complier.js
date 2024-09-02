@@ -47,7 +47,8 @@ export default function Compiler() {
           'Content-Type': 'application/json',
         }});
       //alert(result.data);
-      setOutput(result.data);
+      if(!result.data) setOutput("handle new return");
+      else setOutput(result.data);
     } catch (error) {
       console.error('Error calling server:', error);
       if (error.response) {
